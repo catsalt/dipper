@@ -1,4 +1,4 @@
-// 
+//
 package tanlang
 
 import (
@@ -59,6 +59,8 @@ func (h *HeroList) aFreadJson(jsonPath string) {
 	}
 	return
 }
+
+
 
 // aFwriteJson - write InfoList to Json file.
 func bFwrite(sb []byte, jsonPath string) {
@@ -145,7 +147,33 @@ func ZflxChangeLH(lh LH, idLH int) {
 	LNI.ZdChangeLH(lh, idLH)
 	LXUI.ZlxChangeLH(idLH, LNI, HI, UI, XG)
 }
+// ZfreadJson - v must be Pointer.
+func ZfreadJson(v interface{}, jsonPath string) {
+	j, err := ioutil.ReadFile(jsonPath)
+	if err != nil {
+		fmt.Println(err, "!!! ZfreadJson() 1")
+		return
+	}
+	err = json.Unmarshal(j, v)
+	if err != nil {
+		fmt.Println(err, "!!! ZfreadJson() 2")
+		return
+	}
+	return
+}
 
+func ZfwriteJson(v interface{}, jsonPath string) {
+	j, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		fmt.Println(err, "!!! ZfwriteJson() json")
+	}
+	err = ioutil.WriteFile(jsonPath, j, 0777)
+	if err != nil {
+		fmt.Println(err, "!!! ZfwriteJson()")
+		return
+	}
+	return
+}
 // func (uix UIZHUX) aFwrite(path string) {
 // 	var m string
 // 	for _, v := range uix {
